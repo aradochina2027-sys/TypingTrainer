@@ -5,6 +5,10 @@
 #include <QPushButton>
 #include <QStringList>
 #include <QVector>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
+#include <QRandomGenerator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TypingTrainer; }
@@ -25,16 +29,18 @@ private slots:
     void on_btnRestart_clicked();
     void on_btnReturn_clicked();
     void on_actionExit_triggered();
+    void on_btnRandom_clicked();
 
 private:
     Ui::TypingTrainer *ui;
-
     QString currentText;
     int currentIndex;
     int errorCount;
+    QString lessonsPath;
 
     void setupKeyboard();
-    void loadLesson(int index);
+    void scanLessons();
+    void loadLessonFile(const QString &fileName);
     void updateDisplay();
     void finishSession();
 };

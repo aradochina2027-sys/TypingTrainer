@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>900</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QStackedWidget" name="stackScreens">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="pageStart">
        <layout class="QVBoxLayout" name="layoutStart">
         <item>
@@ -28,20 +31,27 @@
         </item>
         <item>
          <widget class="QLabel" name="lblSelect">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
-           <string>Select a text for the typing exercise:</string>
+           <string>Виберіть текст для тренування:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QComboBox" name="comboLesson">
           <property name="minimumSize">
            <size>
-            <width>300</width>
-            <height>0</height>
+            <width>350</width>
+            <height>30</height>
            </size>
           </property>
          </widget>
@@ -49,7 +59,7 @@
         <item>
          <widget class="QLabel" name="lblDescription">
           <property name="text">
-           <string/>
+           <string>Список уроків завантажується з папки /lessons...</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -57,11 +67,48 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnStart">
-          <property name="text">
-           <string>Start Training</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="layoutStartButtons">
+          <item>
+           <spacer name="spacerLeftStartBtn">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnStart">
+            <property name="minimumSize">
+             <size>
+              <width>180</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Почати тренування</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnRandom">
+            <property name="minimumSize">
+             <size>
+              <width>180</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Випадковий урок</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="spacerRightStartBtn">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </item>
         <item>
          <spacer name="spacerBottomStart">
@@ -79,21 +126,21 @@
           <item>
            <widget class="QLabel" name="lblTime">
             <property name="text">
-             <string>Time: 00:00</string>
+             <string>Час: 00:00</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblSpeed">
             <property name="text">
-             <string>Speed: 0 CPM</string>
+             <string>Швидкість: 0 CPM</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="lblAccuracy">
             <property name="text">
-             <string>Accuracy: 100%</string>
+             <string>Помилки: 0</string>
             </property>
            </widget>
           </item>
@@ -108,6 +155,11 @@
         </item>
         <item>
          <widget class="QTextEdit" name="textDisplay">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -115,6 +167,12 @@
         </item>
         <item>
          <widget class="QFrame" name="frameKeyboard">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>250</height>
+           </size>
+          </property>
           <layout class="QGridLayout" name="layoutGridKeyboard"/>
          </widget>
         </item>
@@ -123,9 +181,23 @@
       <widget class="QWidget" name="pageResults">
        <layout class="QVBoxLayout" name="layoutResults">
         <item>
+         <spacer name="spacerTopRes">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QLabel" name="lblResTitle">
+          <property name="font">
+           <font>
+            <pointsize>18</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="text">
-           <string>Session Results</string>
+           <string>Результати сесії</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -134,25 +206,37 @@
         </item>
         <item>
          <widget class="QGroupBox" name="groupResults">
+          <property name="title">
+           <string>Ваші показники:</string>
+          </property>
           <layout class="QHBoxLayout" name="layoutResBoxes">
            <item>
             <widget class="QLabel" name="resTime">
              <property name="text">
-              <string>Time: --</string>
+              <string>Час: --</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="resSpeed">
              <property name="text">
-              <string>Speed: --</string>
+              <string>Швидкість: --</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="resAccuracy">
              <property name="text">
-              <string>Accuracy: --</string>
+              <string>Помилки: --</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
@@ -162,20 +246,53 @@
         <item>
          <layout class="QHBoxLayout" name="layoutResButtons">
           <item>
+           <spacer name="spacerLeftResBtn">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QPushButton" name="btnRestart">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>40</height>
+             </size>
+            </property>
             <property name="text">
-             <string>Restart Training</string>
+             <string>Повторити</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btnReturn">
+            <property name="minimumSize">
+             <size>
+              <width>150</width>
+              <height>40</height>
+             </size>
+            </property>
             <property name="text">
-             <string>Return to Main</string>
+             <string>На головну</string>
             </property>
            </widget>
           </item>
+          <item>
+           <spacer name="spacerRightResBtn">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
          </layout>
+        </item>
+        <item>
+         <spacer name="spacerBottomRes">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>
@@ -188,33 +305,34 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>900</width>
      <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Файл</string>
     </property>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>Допомога</string>
     </property>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>Вихід</string>
    </property>
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>Про програму</string>
    </property>
   </action>
  </widget>

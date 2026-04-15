@@ -1,19 +1,16 @@
 #include "typingtrainer.h"
 #include "ui_typingtrainer.h"
 #include <QKeyEvent>
+#include <QMessageBox>
 
 TypingTrainer::TypingTrainer(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::TypingTrainer) {
     ui->setupUi(this);
 
-    ui->comboLesson->addItems({
-        "Basic Keys (ASDF JKL;)",
-        "Top Row (QWER UIOP)",
-        "Bottom Row (ZXCV M,./)",
-        "Numbers (1234 5678)"
-    });
+    lessonsPath = QDir::currentPath() + "/lessons";
 
     setupKeyboard();
+    scanLessons();
     ui->stackScreens->setCurrentIndex(0);
 }
 
@@ -33,43 +30,47 @@ void TypingTrainer::setupKeyboard() {
     }
 }
 
-void TypingTrainer::loadLesson(int index) {
-    QVector<QString> lessons = {
-        "asdf jkl; asdf jkl; asdf jkl;",
-        "qwer uiop qwer uiop qwer uiop",
-        "zxcv m,./ zxcv m,./ zxcv m,./",
-        "1234 5678 1234 5678 1234 5678"
-    };
-    currentText = lessons.at(index);
+void TypingTrainer::scanLessons() {
+    ui->comboLesson->clear();
+    QDir dir(lessonsPath);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    QStringList files = dir.entryList({"*.txt"}, QDir::Files);
+    ui->comboLesson->addItems(files);
+}
+
+void TypingTrainer::loadLessonFile(const QString &fileName) {
+    QFile file(lessonsPath + "/" + fileName);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        currentText = in.readAll().trimmed();
+        file.close();
+    } else {
+        currentText = "Error: Lesson file not found.";
+    }
     currentIndex = 0;
     errorCount = 0;
     updateDisplay();
 }
 
 void TypingTrainer::updateDisplay() {
+    if (currentText.isEmpty()) return;
     QString typed = "<span style='color:green;'>" + currentText.left(currentIndex) + "</span>";
     QString current = "<span style='background-color:yellow; font-weight:bold;'>" + QString(currentText.at(currentIndex)) + "</span>";
     QString remaining = currentText.mid(currentIndex + 1);
-
     ui->textDisplay->setHtml(typed + current + remaining);
-
-    int progress = (currentIndex * 100) / currentText.length();
-    ui->progressTraining->setValue(progress);
+    ui->progressTraining->setValue((currentIndex * 100) / currentText.length());
 }
 
 void TypingTrainer::keyPressEvent(QKeyEvent *event) {
-    if (ui->stackScreens->currentIndex() != 1) return;
-
+    if (ui->stackScreens->currentIndex() != 1 || currentText.isEmpty()) return;
     QString keyText = event->text();
     if (keyText.isEmpty()) return;
-
     if (keyText == currentText.at(currentIndex)) {
         currentIndex++;
-        if (currentIndex >= currentText.length()) {
-            finishSession();
-        } else {
-            updateDisplay();
-        }
+        if (currentIndex >= currentText.length()) finishSession();
+        else updateDisplay();
     } else {
         errorCount++;
     }
@@ -82,19 +83,23 @@ void TypingTrainer::finishSession() {
 }
 
 void TypingTrainer::on_btnStart_clicked() {
-    loadLesson(ui->comboLesson->currentIndex());
+    if (ui->comboLesson->currentText().isEmpty()) {
+        QMessageBox::warning(this, "Warning", "Please add .txt files to /lessons folder");
+        return;
+    }
+    loadLessonFile(ui->comboLesson->currentText());
     ui->stackScreens->setCurrentIndex(1);
 }
 
-void TypingTrainer::on_btnRestart_clicked() {
-    loadLesson(ui->comboLesson->currentIndex());
-    ui->stackScreens->setCurrentIndex(1);
+void TypingTrainer::on_btnRandom_clicked() {
+    int count = ui->comboLesson->count();
+    if (count > 0) {
+        int index = QRandomGenerator::global()->bounded(count);
+        ui->comboLesson->setCurrentIndex(index);
+        on_btnStart_clicked();
+    }
 }
 
-void TypingTrainer::on_btnReturn_clicked() {
-    ui->stackScreens->setCurrentIndex(0);
-}
-
-void TypingTrainer::on_actionExit_triggered() {
-    close();
-}
+void TypingTrainer::on_btnRestart_clicked() { on_btnStart_clicked(); }
+void TypingTrainer::on_btnReturn_clicked() { ui->stackScreens->setCurrentIndex(0); }
+void TypingTrainer::on_actionExit_triggered() { close(); }
