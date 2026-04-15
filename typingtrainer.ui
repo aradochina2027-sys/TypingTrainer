@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TypingTrainer</class>
+ <widget class="QMainWindow" name="TypingTrainer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Typing Trainer</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QStackedWidget" name="stackScreens">
+      <widget class="QWidget" name="pageStart">
+       <layout class="QVBoxLayout" name="layoutStart">
+        <item>
+         <spacer name="spacerTopStart">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblSelect">
+          <property name="text">
+           <string>Select a text for the typing exercise:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="comboLesson">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lblDescription">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStart">
+          <property name="text">
+           <string>Start Training</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacerBottomStart">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageTraining">
+       <layout class="QVBoxLayout" name="layoutTraining">
+        <item>
+         <layout class="QHBoxLayout" name="layoutStats">
+          <item>
+           <widget class="QLabel" name="lblTime">
+            <property name="text">
+             <string>Time: 00:00</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblSpeed">
+            <property name="text">
+             <string>Speed: 0 CPM</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lblAccuracy">
+            <property name="text">
+             <string>Accuracy: 100%</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QProgressBar" name="progressTraining">
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="textDisplay">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frameKeyboard">
+          <layout class="QGridLayout" name="layoutGridKeyboard"/>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageResults">
+       <layout class="QVBoxLayout" name="layoutResults">
+        <item>
+         <widget class="QLabel" name="lblResTitle">
+          <property name="text">
+           <string>Session Results</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupResults">
+          <layout class="QHBoxLayout" name="layoutResBoxes">
+           <item>
+            <widget class="QLabel" name="resTime">
+             <property name="text">
+              <string>Time: --</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="resSpeed">
+             <property name="text">
+              <string>Speed: --</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="resAccuracy">
+             <property name="text">
+              <string>Accuracy: --</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="layoutResButtons">
+          <item>
+           <widget class="QPushButton" name="btnRestart">
+            <property name="text">
+             <string>Restart Training</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnReturn">
+            <property name="text">
+             <string>Return to Main</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
