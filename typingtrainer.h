@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-#include <vector>
+#include <QStringList>
+#include <QVector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TypingTrainer; }
@@ -16,6 +17,9 @@ public:
     TypingTrainer(QWidget *parent = nullptr);
     ~TypingTrainer();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 private slots:
     void on_btnStart_clicked();
     void on_btnRestart_clicked();
@@ -24,8 +28,15 @@ private slots:
 
 private:
     Ui::TypingTrainer *ui;
+
+    QString currentText;
+    int currentIndex;
+    int errorCount;
+
     void setupKeyboard();
-    std::vector<QPushButton*> keys;
+    void loadLesson(int index);
+    void updateDisplay();
+    void finishSession();
 };
 
 #endif
