@@ -3,12 +3,10 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-#include <QStringList>
 #include <QMap>
-#include <QDir>
-#include <QFile>
-#include <QTextStream>
-#include <QRandomGenerator>
+#include <QTimer>
+#include <QElapsedTimer>
+#include <QSettings>
 #include <QKeyEvent>
 
 QT_BEGIN_NAMESPACE
@@ -27,6 +25,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
+    void updateTimerLabel();
     void on_btnStart_clicked();
     void on_btnRandom_clicked();
     void on_btnRestart_clicked();
@@ -41,6 +40,9 @@ private:
     QString lessonsPath;
 
     QMap<QString, QPushButton*> keyboardMap;
+    QTimer *sessionTimer;
+    QElapsedTimer elapsedTimer;
+    QSettings *settings;
 
     void setupKeyboard();
     void scanLessons();
@@ -48,6 +50,8 @@ private:
     void updateDisplay();
     void finishSession();
     void highlightKey(const QString &key, bool pressed);
+    void saveSettings();
+    void loadSettings();
 };
 
 #endif
